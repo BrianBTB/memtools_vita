@@ -58,7 +58,7 @@ def disassemble(addr, data, thumb=False):
 
 """
 	Dissassembles for the automatic dump
-"""
+
 def disassembledump(addr, data):
     none = 0                                            # disassed at least on
     mode = CS_MODE_ARM
@@ -71,6 +71,7 @@ def disassembledump(addr, data):
     if none != 1:
         print "Couldn't disassemble at 0x%x"%(addr)
     return "lol"
+"""
 """
     The good guy
 """
@@ -136,11 +137,26 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     disassemble(addr, data.decode('hex'), thumb=True)
                 else:
                     disassemble(addr, data.decode('hex'))
+
+            if(typ == 'dis_res'):
+                if(extra == "thumb"):
+                    disassemble(addr, data.decode('hex'), thumb=True)
+                else:
+                    disassemble(addr, data.decode('hex'))
+
+
+
+
+                    """
+
+
+
 	    if(typ == 'resolve'):
                 
 		adr = disassembledump(addr,data.decode('hex'))
 		print "hi from python", adr
 		self.wfile.write("resolve " + adr + " " + extra)
+		"""
 
             if(typ == 'dump'):
                 fname = extra

@@ -65,7 +65,15 @@ function do_dis(aspace, addr, len, mode){
         logdbg("DisError: " + e);
     }
 }
-
+function do_dis_resolve(aspace, addr, len, mode){
+    try{
+        var bytes = get_bytes(aspace, addr, len);
+		
+        sendcmsg("dis_res", addr, bytes);
+    }catch(e){
+        logdbg("DisError: " + e);
+    }
+}
 
 /*
     Resolve module from address
@@ -79,9 +87,14 @@ function do_resolve(aspace,addr,ModuleName){
 	{
 		this_import = this_module.import_list[i];
 		this_func_array = this_import.func_entry_table;
-		instr = ReadInt32FromAddr(this_func_array+4,aspace);
+		instraddr = ReadInt32FromAddr(this_func_array,aspace);
+		logdbg("Instraddr: 0x" + instraddr.toString(16));
 		modname = this_import.name;
-		sendcmsg("resolve",this_func_array,instr,modname);	
+		logdbg("Name: " + modname);
+		//logdbg("...");
+		
+		do_dis_resolve(aspace,instraddr,0x8,0);
+		//sendcmsg("resolve",this_func_array,instr.toString(16),modname);	
 				
 	}
 }
