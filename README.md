@@ -2,6 +2,9 @@
 Memtools Vita 0.not_really_a_release_lulz
 -------
 Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln.
+
+*Install Capstone for python (disassembly library)*
+
 To use, first start the server:
 ```
     chmod a+x serv.py
