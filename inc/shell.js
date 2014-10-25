@@ -71,16 +71,16 @@ function do_dis(aspace, addr, len, mode){
     Resolve module from address
 */
 function do_resolve(aspace,addr,ModuleName){
-addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
-var this_module = new sce_module(addr-4,aspace);
-mods.push(this_module_info);
-for(i=0;i<this_module.import_list.length;i++)
+	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
+	var this_module = new sce_module(addr-4,aspace);
+	mods.push(this_module_info);
+	for(i=0;i<this_module.import_list.length;i++)
 	{
-	this_import = this_module.import_list[i];
-	this_func_array = this_import.func_entry_table;
-	instr = ReadInt32FromAddr(aspace,this_func_array);
-	modname = this_import.name;
-	sendcmsg("resolve",0x0,instr,modname);	
+		this_import = this_module.import_list[i];
+		this_func_array = this_import.func_entry_table;
+		instr = ReadInt32FromAddr(aspace,this_func_array);
+		modname = this_import.name;
+		sendcmsg("resolve",0x0,instr,modname);	
 				
 	}
 }
@@ -139,7 +139,9 @@ function shell(aspace){
 			}
 			else if (cmd_s[0] == "autodump"){
 				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
-				addr = do_search(aspace, 0x82000000, 0xFFFFFFFF, "Sce");
+				do_resolve(aspace,0x82000000, "SceWebkit")
+				
+/*addr = do_search(aspace, 0x82000000, 0xFFFFFFFF, "Sce");
 				var webkit_module_info = new module_info(addr-4,aspace);
 				var webkit_module = new sce_module(webkit_module_info,aspace);
 				
@@ -157,6 +159,7 @@ function shell(aspace){
 				
 				}
 				
+*/
 				
 				continue;
 			}
