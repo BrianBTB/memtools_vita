@@ -12,6 +12,7 @@ import SimpleHTTPServer
 import urlparse
 import urllib2
 from capstone import *
+from progress.bar import Bar
 
 PORT = 8888
 
@@ -65,10 +66,11 @@ def disassembledump(addr, data):
     disassed = md.disasm(data, addr)
     for i in disassed:
         none = 1
-        return i.op_str
+	print "0x%x:\t%s\t%s" %(i.address, i.mnemonic, i.op_str)
+        
     if none != 1:
         print "Couldn't disassemble at 0x%x"%(addr)
-
+    return "lol"
 """
     The good guy
 """
@@ -135,13 +137,16 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 else:
                     disassemble(addr, data.decode('hex'))
 	    if(typ == 'resolve'):
-		adr = disassembledump(addr,data.decode('hex'))	   
+                
+		adr = disassembledump(addr,data.decode('hex'))
+		print "hi from python", adr
 		self.wfile.write("resolve " + adr + " " + extra)
 
             if(typ == 'dump'):
                 fname = extra
                 dump_data(data.decode('hex'), fname)
-
+            
+                
 
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)

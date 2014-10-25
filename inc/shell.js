@@ -73,14 +73,15 @@ function do_dis(aspace, addr, len, mode){
 function do_resolve(aspace,addr,ModuleName){
 	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
 	var this_module = new sce_module(addr-4,aspace);
-	mods.push(this_module_info);
+	mods.push(this_module);
+	
 	for(i=0;i<this_module.import_list.length;i++)
 	{
 		this_import = this_module.import_list[i];
 		this_func_array = this_import.func_entry_table;
-		instr = ReadInt32FromAddr(aspace,this_func_array);
+		instr = ReadInt32FromAddr(this_func_array+4,aspace);
 		modname = this_import.name;
-		sendcmsg("resolve",0x0,instr,modname);	
+		sendcmsg("resolve",this_func_array,instr,modname);	
 				
 	}
 }
@@ -100,7 +101,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
            var cb = aspace[i]; 
            var tb = pattern[score].charCodeAt(0);
            if((i % 0x10000) == 0){
-               logdbg("0x" + i.toString(16) + " ...");
+               logdbg(pattern + " 0x" + i.toString(16) + " ... \033[1A\r");
            }
            if(cb == tb){
                score += 1;
@@ -137,9 +138,14 @@ function shell(aspace){
 			location.reload();
 			break;
 			}
+			else if(cmd_s[0] == "resolve"){
+			logdbg("hi");
+			do_resolve(aspace,cmd_s[1], cmd_s[2]);
+			continue;
+			}
 			else if (cmd_s[0] == "autodump"){
 				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
-				do_resolve(aspace,0x82000000, "SceWebkit")
+				do_resolve(aspace,0x82000000, "SceWebKit")
 				
 /*addr = do_search(aspace, 0x82000000, 0xFFFFFFFF, "Sce");
 				var webkit_module_info = new module_info(addr-4,aspace);
@@ -162,13 +168,6 @@ function shell(aspace){
 */
 				
 				continue;
-			}
-			else if (cmd_s[0] == "atdis"){
-				
-				addr = do_search(aspace, 0x82000000, 0xFFFFFFFF, "Sce");
-				var webkit_module_info = new module_info(addr-4,aspace);
-				var webkit_module = new sce_module(webkit_module_info,aspace);
-			
 			}
             // examine
             else if(cmd_s[0] == "x"){
