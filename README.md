@@ -14,7 +14,7 @@ Then with the Vita browse to `http://<ipaddr>:8888`.
 If all goes well you will see some output from the `serv.py` script. 
 When you see `%> ` it means that initialization is done.
 The supported commands are:
-- **resolve** `addr `modname : use resolve 0x82000000 SceWebkit to begin recursively resolving the modules
+- **autodump**  : use to begin recursively resolving the modules
 - **savemods** : !unimplemented! save modules to disk (stored in "dump" folder and named as <modname>.bin)
 - **x** `addr` `len` : to display `len` bytes from `addr` in a hex-editor-like fashion
 - **dis** `addr` `len` `mode` : to disassemble `len` bytes from `addr` in `mode` (thumb or arm, latter is default)
