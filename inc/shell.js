@@ -78,6 +78,7 @@ for(i=0;i<this_module.import_list.length;i++)
 	{
 	this_import = this_module.import_list[i];
 	this_func_array = this_import.func_entry_table;
+	instr = ReadInt32FromAddr(aspace,this_func_array);
 	modname = this_import.name;
 	sendcmsg("resolve",0x0,instr,modname);	
 				
