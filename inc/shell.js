@@ -79,7 +79,8 @@ for(i=0;i<this_module.import_list.length;i++)
 	this_import = this_module.import_list[i];
 	this_func_array = this_import.func_entry_table;
 	modname = this_import.name;
-	 sendcmsg("resolve", instr,modname);			
+	sendcmsg("resolve",0x0,instr,modname);	
+				
 	}
 }
 
