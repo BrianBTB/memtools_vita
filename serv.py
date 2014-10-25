@@ -147,16 +147,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 
 
-                    """
-
-
-
-	    if(typ == 'resolve'):
                 
-		adr = disassembledump(addr,data.decode('hex'))
-		print "hi from python", adr
-		self.wfile.write("resolve " + adr + " " + extra)
-		"""
 
             if(typ == 'dump'):
                 fname = extra
