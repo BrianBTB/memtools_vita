@@ -5,6 +5,7 @@ Allows to play with the Vita's webkit process' memory through by leveraging a we
 
 Known issues:
 Does not dump the data section, only executable code. IDA does not like that, but its enough for ROP and some reversing. To dump the data section, manually add 4k increments (4k aligned) until crash. It probably will dump more than you need, but you will definately have the data section (it is at higher addresses than module_info)
+Error handling does not account for ASLR. List of dumped modules needs to be serversided and SceWebKit (and the import tree) will have to be re-resolved every time it crashes
 
 
 *Install Capstone for python (disassembly library)*
