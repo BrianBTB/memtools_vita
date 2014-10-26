@@ -87,13 +87,8 @@ function do_resolve(aspace,addr,ModuleName){
 		this_import = this_module.import_list[i];
 		this_func_array = this_import.func_entry_table;
 		instraddr = ReadInt32FromAddr(this_func_array,aspace);
-		logdbg("Instraddr: 0x" + instraddr.toString(16));
 		modname = this_import.name;
-		logdbg("Name: " + modname);
-		//logdbg("...");
-		
 		do_dis_resolve(aspace,instraddr,0x8,modname);
-		//sendcmsg("resolve",this_func_array,instr.toString(16),modname);	
 				
 	}
 	do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
@@ -154,16 +149,12 @@ function shell(aspace){
 			break;
 			}
 			else if(cmd_s[0] == "resolve"){
-			logdbg("Resolving: " + cmd_s[1]);
 			do_resolve(aspace,cmd_s[1], cmd_s[2]);
 			continue;
 			}
 			else if (cmd_s[0] == "autodump"){
 				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
 				do_resolve(aspace,0x82000000, "SceWebKit")
-				
-
-				
 				continue;
 			}
             // examine
