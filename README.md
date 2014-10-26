@@ -2,7 +2,7 @@
 Memtools Vita 0.2 (iffy autoresolve)
 -------
 Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve is a little iffy and seems to get stuck on specific modules. I need to look at the disasm of the patched function stub to determine the cause 
-E.G. SceHafnium imports Scelofilemgr, `0000051f` is the address returned by the parser. It gets stuck in a really slow loop trying every 4k addresses... Also no modules seem to dump other than the first
+E.G. SceHafnium imports Scelofilemgr, `0000051f` is the address returned by the parser. It gets stuck in a really slow loop trying every 4k addresses...
 
 *Install Capstone for python (disassembly library)*
 
