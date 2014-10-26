@@ -75,13 +75,15 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             dbg = parsed['dbg'][0]
             print dbg
         # handle dump
-        elif self.path == '/Command':
-            
+        elif self.path == '/Command':   			
             sockfd = self.request
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            cmd = raw_input("%> ")
+            if len(self.mods) > 0:
+                cmd = self.mods.pop(-1)
+            else:
+                cmd = raw_input("%> ")
             self.wfile.write(cmd)
         # normal requests
         else:

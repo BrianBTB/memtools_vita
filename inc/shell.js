@@ -81,8 +81,9 @@ function do_dis_resolve(aspace, addr, len, name){
 function do_resolve(aspace,addr,ModuleName){
 	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
 	var this_module = new sce_module(addr-4,aspace);
-	mods.push(this_module);
-	//do_dump(aspace, , len, fname)
+	//mods.push(this_module);
+	do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
+	
 	for(i=0;i<this_module.import_list.length;i++)
 	{
 		this_import = this_module.import_list[i];
@@ -98,9 +99,6 @@ function do_resolve(aspace,addr,ModuleName){
 				
 	}
 }
-/*
-	Dump mod from sce_module type
-*/
 
 
 

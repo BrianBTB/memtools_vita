@@ -31,11 +31,9 @@ Once you resolve SceWebkit, you will need to look at the module_info to get stub
 -----
 TODO
 -----
-- Implement : callback to allow calls to "resolve" from within the module parsing loop JS side. Got some ideas for this one, but its late.
 
-- Implement : automatic dumping to file.
+- Implement : resume on error (maybe already works, needs better error handling, currently can get very stuck)
 
-- Implement : resume on error
 
 - Implement : special-case handling for offsize import list entries
 
