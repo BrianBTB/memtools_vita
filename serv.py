@@ -56,22 +56,7 @@ def disassemble(addr, data, thumb=False):
     if none != 1:
         print "Couldn't disassemble at 0x%x"%(addr)
 
-"""
-	Dissassembles for the automatic dump
 
-def disassembledump(addr, data):
-    none = 0                                            # disassed at least on
-    mode = CS_MODE_ARM
-    md = Cs(CS_ARCH_ARM, mode + CS_MODE_LITTLE_ENDIAN)
-    disassed = md.disasm(data, addr)
-    for i in disassed:
-        none = 1
-	print "0x%x:\t%s\t%s" %(i.address, i.mnemonic, i.op_str)
-        
-    if none != 1:
-        print "Couldn't disassemble at 0x%x"%(addr)
-    return "lol"
-"""
 """
     The good guy
 """
@@ -80,7 +65,9 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         GET Request Handler
         Used for debugging and interactive shell stuff
     """
-    def do_GET(self): 
+    mods = []
+    def do_GET(self):
+        
         # debugging info
         if self.path.startswith('/Debug'):
             print '[+] DBG: ',
@@ -89,6 +76,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             print dbg
         # handle dump
         elif self.path == '/Command':
+            
             sockfd = self.request
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
@@ -139,10 +127,17 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     disassemble(addr, data.decode('hex'))
 
             if(typ == 'dis_res'):
-                if(extra == "thumb"):
-                    disassemble(addr, data.decode('hex'), thumb=True)
-                else:
-                    disassemble(addr, data.decode('hex'))
+                mode = CS_MODE_ARM
+                md = Cs(CS_ARCH_ARM, mode + CS_MODE_LITTLE_ENDIAN)
+                disassed = md.disasm(data.decode('hex'), addr)
+                ops = []
+                ptrstr = ""
+                for i in disassed:
+                    ops.append(i.op_str[7:])
+                ptrstr = ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
+                print ptrstr
+                cmdstr = "resolve 0x" + ptrstr + " " + extra
+                self.mods.append(cmdstr)
 
 
 

@@ -44,7 +44,7 @@ function do_dump(aspace, addr, len, fname){
 	sendcmsg("dump", addr, bytes, fname);
 	j=j+0x1000;
 	//('%.*f' % (n + 1, f))[:-1]
-	if (j%0x10000 == 0) { logdbg("Dumping... %"+(j/len*100).toString()) }
+	if (j%0x10000 == 0) { logdbg("Dumping " + fname + ": %"+(j/len*100).toString() + "\033[1A\r") }
 	}
         
         
@@ -65,11 +65,11 @@ function do_dis(aspace, addr, len, mode){
         logdbg("DisError: " + e);
     }
 }
-function do_dis_resolve(aspace, addr, len, mode){
+function do_dis_resolve(aspace, addr, len, name){
     try{
         var bytes = get_bytes(aspace, addr, len);
 		
-        sendcmsg("dis_res", addr, bytes);
+        sendcmsg("dis_res", addr, bytes, name);
     }catch(e){
         logdbg("DisError: " + e);
     }
@@ -82,7 +82,7 @@ function do_resolve(aspace,addr,ModuleName){
 	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
 	var this_module = new sce_module(addr-4,aspace);
 	mods.push(this_module);
-	
+	//do_dump(aspace, , len, fname)
 	for(i=0;i<this_module.import_list.length;i++)
 	{
 		this_import = this_module.import_list[i];
@@ -93,11 +93,16 @@ function do_resolve(aspace,addr,ModuleName){
 		logdbg("Name: " + modname);
 		//logdbg("...");
 		
-		do_dis_resolve(aspace,instraddr,0x8,0);
+		do_dis_resolve(aspace,instraddr,0x8,modname);
 		//sendcmsg("resolve",this_func_array,instr.toString(16),modname);	
 				
 	}
 }
+/*
+	Dump mod from sce_module type
+*/
+
+
 
 /*
     Search for pattern in [begaddr, endaddr[
@@ -152,7 +157,7 @@ function shell(aspace){
 			break;
 			}
 			else if(cmd_s[0] == "resolve"){
-			logdbg("hi");
+			logdbg("Resolving: " + cmd_s[1]);
 			do_resolve(aspace,cmd_s[1], cmd_s[2]);
 			continue;
 			}
@@ -160,25 +165,7 @@ function shell(aspace){
 				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
 				do_resolve(aspace,0x82000000, "SceWebKit")
 				
-/*addr = do_search(aspace, 0x82000000, 0xFFFFFFFF, "Sce");
-				var webkit_module_info = new module_info(addr-4,aspace);
-				var webkit_module = new sce_module(webkit_module_info,aspace);
-				
-				//working 
-				base = webkit_module.baseaddr;
-				logdbg(base);
-				stub_end = webkit_module_info.stub_end;
-				do_read(aspace,base,0x5C);
-				do_dump(aspace,base,stub_end,"webkit.bin");
-				
-				
-				
-				for(i=0;i<webkit_module.import_list.length;i++)
-				{
-				
-				}
-				
-*/
+
 				
 				continue;
 			}
