@@ -1,5 +1,5 @@
 -------
-Memtools Vita 0.2 (iffy autoresolve)
+Memtools Vita 0.2.1 (iffy autoresolve)
 -------
 Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory)
 
