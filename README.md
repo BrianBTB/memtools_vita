@@ -22,3 +22,19 @@ The supported commands are:
 - **ss** `begaddr` `endaddr` `pattern`: to search for the string `pattern` in [`begaddr`, `endaddr`[
 - **reload** : to reload/reset everything
 - **exit** : to exit
+
+-----
+Manually Dumping
+-----
+Once you resolve SceWebkit, you will need to look at the module_info to get stub_end. Dump from base of SceWebkit (sce_module.base) to stub end. The dump code appends to existing files with the same name, so delete the old ones if you are redumping for whatever reason. resolve.js implements the memory parsing for resolving a module, give it a look for help.
+
+-----
+TODO
+-----
+Figure out callback to allow calls to "resolve" from within the module parsing loop JS side. Got some ideas for this one, but its late.
+Implement automatic dumping to file.
+Implement resume on error
+Implement special-case handling for offsize import list entries
+Implement doughnut protocol
+Implement special-case handling for unavailable (but imported) mods (I haven't been able to dump SceLibKernel manually, may be a bug or it may actually be impossible)
+
