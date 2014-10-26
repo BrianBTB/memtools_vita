@@ -1,7 +1,7 @@
 -------
 Memtools Vita 0.1 (unfinished autoresolve)
 -------
-Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve unfinished in this version do to questionable parsing. Using resolve 0x82000000 SceWebkit will at least get you the modules imported by webkit automatically.
+Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve unfinished in this version do to questionable parsing. Using **resolve** `0x82000000` `SceWebkit` will at least get you the modules imported by webkit automatically.
 
 *Install Capstone for python (disassembly library)*
 
