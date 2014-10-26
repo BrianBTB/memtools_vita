@@ -3,6 +3,10 @@ Memtools Vita 0.2 (iffy autoresolve)
 -------
 Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory)
 
+Known issues:
+Does not dump the data section, only executable code. IDA does not like that, but its enough for ROP and some reversing. To dump the data section, manually add 4k increments (4k aligned) until crash. It probably will dump more than you need, but you will definately have the data section (it is at higher addresses than module_info)
+
+
 *Install Capstone for python (disassembly library)*
 
 To use, first start the server:
@@ -26,14 +30,11 @@ The supported commands are:
 -----
 Manually Dumping
 -----
-Once you resolve SceWebkit, you will need to look at the module_info to get stub_end. Dump from base of SceWebkit (sce_module.base) to stub end. The dump code appends to existing files with the same name, so delete the old ones if you are redumping for whatever reason. resolve.js implements the memory parsing for resolving a module, give it a look for help.
+Once you resolve a module and get module_info, you will need to look at the module_info to get stub_end. Dump from base of SceWebkit (sce_module.base) to stub end. The dump code appends to existing files with the same name, so delete the old ones if you are redumping for whatever reason. resolve.js implements the memory parsing for resolving a module, give it a look for help.
 
 -----
 TODO
 -----
-
-- Implement : resume on error (maybe already works, needs better error handling, currently can get very stuck)
-
 
 - Implement : special-case handling for offsize import list entries
 
