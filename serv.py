@@ -12,7 +12,7 @@ import SimpleHTTPServer
 import urlparse
 import urllib2
 from capstone import *
-from progress.bar import Bar
+
 
 PORT = 8888
 
