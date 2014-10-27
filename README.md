@@ -1,7 +1,7 @@
 -------
 Memtools Vita 0.2 (iffy autoresolve)
 -------
-Allows to play with the Vita's webkit process' memory through by leveraging a webkit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory)
+Allows to developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory).
 
 Known issues:
 Does not dump the data section, only executable code. IDA does not like that, but its enough for ROP and some reversing. To dump the data section, manually add 4k increments (4k aligned) until crash. It probably will dump more than you need, but you will definately have the data section (it is at higher addresses than module_info)
