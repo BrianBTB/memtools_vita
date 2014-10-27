@@ -6,23 +6,31 @@
     than fiddling with the Vita.
 """
 
-import struct
 import SocketServer
 import SimpleHTTPServer
+import os
 import urlparse
-import urllib2
-from capstone import *
-
+from capstone import CS_MODE_THUMB, CS_MODE_ARM, Cs, CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN
 
 PORT = 8888
 
-"""
-    Dump given data to fname
-"""
-def dump_data(data, fname):
-    fp = open("dump/"+ fname,"a+b")
-    fp.write(data)
-    fp.close()
+PATH = os.path.dirname(os.path.realpath(__file__))
+
+
+def dump_data(data, file_name):
+    """
+    Dump given data to file
+
+    :type file_name: str
+    :param file_name: The dump data file name
+    """
+    directory = PATH+"/dump/"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    file_pointer = open(directory + file_name, "a+b")
+    file_pointer.write(data)
+    file_pointer.close()
 
 """
     Display src in a hex-editor-file fashion
