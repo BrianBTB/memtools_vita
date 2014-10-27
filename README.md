@@ -39,9 +39,7 @@ TODO
 
 - Implement : special-case handling for offsize import list entries
 
-- Implement : doughnut protocol
-
-- Implement : special-case handling for unavailable (but imported) mods (I haven't been -able to dump SceLibKernel manually, may be a bug or it may actually be impossible)
+- Implement : special-case handling for kernel modules, I.E. "SVC" mnemonic detection in disassemble for address
 
 -----
 Contributors
