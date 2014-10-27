@@ -42,4 +42,10 @@ TODO
 
 - Implement : special-case handling for unavailable (but imported) mods (I haven't been -able to dump SceLibKernel manually, may be a bug or it may actually be impossible)
 
-
+-----
+Contributors
+-----
+- CodeLion
+- Josh_Axey
+- Archaemic
+- "a good friend"
