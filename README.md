@@ -45,7 +45,7 @@ TODO
 -----
 Contributors
 -----
-- CodeLion
-- Josh_Axey
-- Archaemic
-- "a good friend"
+- [CodeLion](https://twitter.com/bballing1): PoC using bug with netcat backend, composite of code below:
+- [Josh_Axey](https://twitter.com/josh_axey): cleaner PoC using bug with python backend
+- [Archaemic](https://twitter.com/Archaemic): even cleaner PoC using bug with even better python backend (and before everyone else)
+- "a good friend": major refactor combining all three PoCs and ground up replacement of python backend with far superior python backend
