@@ -46,6 +46,7 @@ TODO
 Contributors
 -----
 - [CodeLion](https://twitter.com/bballing1): PoC using bug with netcat backend, and this new composite of code below:
+- [hgoel0974](https://twitter.com/hgoel0974): contributions to above netcat streaming dump PoC
 - [Josh_Axey](https://twitter.com/josh_axey): cleaner PoC using bug with python backend
 - [Archaemic](https://twitter.com/Archaemic): even cleaner PoC using bug with even better python backend (and before everyone else)
 - "a good friend": major refactor combining all three PoCs and ground up replacement of python backend with far superior python backend
