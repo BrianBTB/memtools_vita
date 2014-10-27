@@ -1,5 +1,5 @@
 -------
-Memtools Vita 0.2.1 (iffy autoresolve)
+Memtools Vita 0.2.2 (iffy autoresolve)
 -------
 Allows developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory).
 
@@ -51,7 +51,7 @@ Contributors
 - [Josh_Axey](https://twitter.com/josh_axey): cleaner PoC using bug with python backend
 - [Archaemic](https://twitter.com/Archaemic): even cleaner PoC using bug with even better python backend (and before everyone else)
 - "a good friend": major refactor combining all three PoCs and ground up replacement of python backend with far superior python backend
-
+- [PureIso](https://github.com/PureIso): fixed directory existence check in dump code
 -----
 Hints & Help
 -----
