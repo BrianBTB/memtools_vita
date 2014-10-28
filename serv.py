@@ -143,10 +143,16 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 ops = []
                 ptrstr = ""
                 for i in disassed:
+                    if i.mnemonic == "SVC":
+                        return
                     ops.append(i.op_str[7:])
+                    
+
+
                 ptrstr = ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
                 print ptrstr
                 cmdstr = "resolve 0x" + ptrstr + " " + extra
+                
                 self.mods.append(cmdstr)
 
 
