@@ -116,7 +116,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
            var tb = pattern[index].charCodeAt(0);
 
            if((i % 0x10000) == 0){
-               logdbg(pattern + " 0x" + i.toString(16) + " ... \033[1A\r");
+               logdbg("Searching for " + pattern + " 0x" + i.toString(16) + " ... \033[1A\r");
            }
            if(cb == tb){
                score += 1;
@@ -131,7 +131,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
         if(found == -1){
             logdbg("Pattern not found!");
         }else{
-            logdbg("Pattern " + pattern + " found at: 0x" + found.toString(16));
+            logdbg("Searching for " + pattern + " found at: 0x" + found.toString(16));
 			return found;
         }
     }catch(e){
