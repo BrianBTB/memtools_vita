@@ -267,7 +267,7 @@ function shell(aspace){
             // search string
             else if(cmd_s[0] == 'sh'){
                 if(cmd_s.length < 3){
-                    logdbg("ss <beginaddr> <endaddr> <hex pattern>");
+                    logdbg("sh <beginaddr> <endaddr> <hex pattern>");
                     continue;
                 }
                 var begaddr = Number(cmd_s[1]);
