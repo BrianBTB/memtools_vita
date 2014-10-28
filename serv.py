@@ -59,7 +59,7 @@ def disassemble(addr, data, thumb=False):
     disassed = md.disasm(data, addr)
     for i in disassed:
         none = 1
-        print "0x%x:\t%s\t%s" %(i.address, i.mnemonic, i.op_str)
+        print "0x%x:\t%s    %s" %(i.address, i.mnemonic, i.op_str)
     if none != 1:
         print "Couldn't disassemble at 0x%x"%(addr)
 
@@ -78,12 +78,12 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         # debugging info
         if self.path.startswith('/Debug'):
             try:
-		print '[+] DBG: ',
+                print '[+] DBG: ',
                 parsed = urlparse.parse_qs(urlparse.urlparse(self.path).query)
                 dbg = parsed['dbg'][0]
                 print dbg
-	    except KeyError:
-		print "[+] Warning: Dbg error"
+            except KeyError:
+                print "[+] Warning: Dbg error"
         # handle dump
         elif self.path == '/Command':   			
             sockfd = self.request
@@ -166,7 +166,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 dump_data(data.decode('hex'), fname)
             """
             if typ == 'dump':
-		global CURRENT_DUMP_FILE_NAME
+                global CURRENT_DUMP_FILE_NAME
                 if CURRENT_DUMP_FILE_NAME == "":
                     #If this is the initial dump
                     CURRENT_DUMP_FILE_NAME = extra
