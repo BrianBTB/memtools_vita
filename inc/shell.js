@@ -129,7 +129,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
                score = 0;
            }
 
-           parseInt(i) += reverse ? parseInt(-1) : parseInt(1);
+           i += reverse ? -1 : 1;
         }
 
         if(found == -1){
