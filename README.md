@@ -1,10 +1,10 @@
 -------
 Memtools Vita 0.3beta (untested)
 -------
-Allows developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory).
+Allows developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is untested but should now handle kernel modules (patched syscalls) correctly.
 
 Known issues:
-Does not dump the data section, only executable code. IDA does not like that, but its enough for ROP and some reversing. To dump the data section, manually add 4k increments (4k aligned) until crash. It probably will dump more than you need, but you will definately have the data section (it is at higher addresses than module_info)
+Does not dump the data section, only executable code. IDA does not like that, but its enough for ROP and some reversing. To dump the data section, manually add 4k increments (4k aligned) until crash. It probably will dump more than you need, but you will definitely have the data section (it is at higher addresses than module_info)
 Error handling does not account for ASLR. List of dumped modules needs to be serversided and SceWebKit (and the import tree) will have to be re-resolved every time it crashes
 
 
@@ -38,6 +38,8 @@ TODO
 -----
 
 - Implement : special-case handling for offsize import list entries
+
+- Implement : List of resolved modules serverside to prevent modules which are imported by more than one module from being dumped multiple times.
 
 -----
 Contributors
