@@ -58,6 +58,7 @@ Github Contributers
 - [MrNetrix](https://github.com/MrNetrix) : implemented reverse search and hex search
 - [Aquynh](https://github.com/aquynh) : Changed install instructions for capstone and linked to project
 - [PureIso](https://github.com/PureIso): fixed directory existence check in dump code
+
 -----
 Hints & Help
 -----
