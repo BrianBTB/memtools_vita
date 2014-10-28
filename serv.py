@@ -144,6 +144,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 ptrstr = ""
                 for i in disassed:
                     if i.mnemonic == "SVC":
+                        print "Could not resolve " + extra + " (syscall)
                         return
                     ops.append(i.op_str[7:])
                     
@@ -152,8 +153,11 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 ptrstr = ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
                 print ptrstr
                 cmdstr = "resolve 0x" + ptrstr + " " + extra
+                if int(ptrstr,16) > 0x40000000:
+                    self.mods.append(cmdstr)
+                else:
+                    print "Could not resolve " + extra + " (invalid address)
                 
-                self.mods.append(cmdstr)
 
 
 
