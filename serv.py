@@ -155,7 +155,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 ptrstr = "0x"+ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
                 cmdstr = "resolve " + ptrstr + " " + extra
                 print cmdstr
-                if int(ptrstr,16) > 0x40000000:
+                if (int(ptrstr,16) > 0x40000000) and (int(ptrstr,16) < 0xE000000000):
                     self.mods.append(cmdstr)
                 else:
                     print "Could not resolve " + extra + " (invalid address) "
