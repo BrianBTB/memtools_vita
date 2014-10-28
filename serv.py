@@ -78,10 +78,13 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         
         # debugging info
         if self.path.startswith('/Debug'):
-            print '[+] DBG: ',
-            parsed = urlparse.parse_qs(urlparse.urlparse(self.path).query)
-            dbg = parsed['dbg'][0]
-            print dbg
+            try:
+		print '[+] DBG: ',
+                parsed = urlparse.parse_qs(urlparse.urlparse(self.path).query)
+                dbg = parsed['dbg'][0]
+                print dbg
+	    except KeyError:
+		print "[+] Warning: Dbg error"
         # handle dump
         elif self.path == '/Command':   			
             sockfd = self.request
@@ -89,7 +92,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             if len(self.mods) > 0:
-                cmd = self.mods.pop(-1)
+                cmd = self.mods.pop(0)
             else:
                 cmd = raw_input("%> ")
             self.wfile.write(cmd)
