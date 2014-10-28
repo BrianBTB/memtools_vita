@@ -1,5 +1,5 @@
 -------
-Memtools Vita 0.3.1
+Memtools Vita 0.3.2
 -------
 Allows developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is untested but should now handle kernel modules (patched syscalls) correctly.
 
