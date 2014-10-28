@@ -13,9 +13,8 @@ import urlparse
 from capstone import CS_MODE_THUMB, CS_MODE_ARM, Cs, CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN
 
 PORT = 8888
-
 PATH = os.path.dirname(os.path.realpath(__file__))
-
+CURRENT_DUMP_FILE_NAME = ""
 
 def dump_data(data, file_name):
     """
@@ -160,18 +159,55 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     self.mods.append(cmdstr)
                 else:
                     print "Could not resolve " + extra + " (invalid address) "
-                
-
-
-
-
-                
-
+            
+            """    
             if(typ == 'dump'):
                 fname = extra
                 dump_data(data.decode('hex'), fname)
+            """
+            if typ == 'dump':
+                if CURRENT_DUMP_FILE_NAME == "":
+                    #If this is the initial dump
+                    CURRENT_DUMP_FILE_NAME = extra
+                    #check if this file already exists
+                    self.dump_directory_initializer(extra)
+                elif not extra.startswith(CURRENT_DUMP_FILE_NAME):
+                    #If this is a different dump
+                    self.dump_directory_initializer(extra)
+                    CURRENT_DUMP_FILE_NAME = extra
+
+                dump_data(data.decode('hex'), CURRENT_DUMP_FILE_NAME)
             
-                
+    @staticmethod
+    def dump_directory_initializer(file_name):
+        """
+        Initialise the dump directory, by creating and also if a file exist, it renames it to prevent overwrite
+
+        :param file_name: The file name
+        :type file_name: str
+
+        :return: bool
+        """
+        try:
+            directory = PATH+"/dump/"
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            if file_name != "":
+                for root, dirs, files in os.walk(directory):
+                    for individual_file in files:
+                        if file_name == individual_file:
+                            full_path = directory + file_name
+                            #generate a unique name extension
+                            current_milli_time = int(round(time.time() * 1000))
+                             # Separate base from extension
+                            base, extension = os.path.splitext(file_name)
+                            new_file_name = base + "_" + str(current_milli_time) + extension
+                            os.rename(full_path, directory + new_file_name)
+            return True
+        except Exception, ex:
+            print '[+] DBG Directory Initializer Exception: ' + str(ex)
+            return False                
 
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)
