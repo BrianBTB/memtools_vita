@@ -166,7 +166,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 dump_data(data.decode('hex'), fname)
             """
             if typ == 'dump':
-				global global CURRENT_DUMP_FILE_NAME
+		global CURRENT_DUMP_FILE_NAME
                 if CURRENT_DUMP_FILE_NAME == "":
                     #If this is the initial dump
                     CURRENT_DUMP_FILE_NAME = extra

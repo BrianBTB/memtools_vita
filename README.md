@@ -60,6 +60,13 @@ Github Contributers
 - [PureIso](https://github.com/PureIso): fixed directory existence check in dump code, added backup of old dumps and creation of new unique file if dump exists
 
 -----
+Testers
+-----
+- [BigBoss](https://twitter.com/psxdev)
+- [Alin](https://twitter.com/Logomorph)
+
+
+-----
 Hints & Help
 -----
 - [Yifan](https://twitter.com/yifanlu)
