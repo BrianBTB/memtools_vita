@@ -1,5 +1,5 @@
 -------
-Memtools Vita 0.2.2 (iffy autoresolve)
+Memtools Vita 0.3beta (untested)
 -------
 Allows developers to play with the Vita's WebKit process memory by leveraging a WebKit vuln. Autoresolve is a little iffy, supports no special cases and skips alot of modules because it crashes (reading invalid memory).
 
@@ -38,8 +38,6 @@ TODO
 -----
 
 - Implement : special-case handling for offsize import list entries
-
-- Implement : special-case handling for kernel modules, I.E. "SVC" mnemonic detection in disassemble for address
 
 -----
 Contributors
