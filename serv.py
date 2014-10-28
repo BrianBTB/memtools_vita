@@ -166,6 +166,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 dump_data(data.decode('hex'), fname)
             """
             if typ == 'dump':
+				global global CURRENT_DUMP_FILE_NAME
                 if CURRENT_DUMP_FILE_NAME == "":
                     #If this is the initial dump
                     CURRENT_DUMP_FILE_NAME = extra
@@ -192,7 +193,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             directory = PATH+"/dump/"
             if not os.path.exists(directory):
                 os.makedirs(directory)
-
+			
             if file_name != "":
                 for root, dirs, files in os.walk(directory):
                     for individual_file in files:
