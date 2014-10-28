@@ -64,7 +64,7 @@ Testers
 -----
 - [BigBoss](https://twitter.com/psxdev)
 - [Alin](https://twitter.com/Logomorph)
-
+- [Kamil Maciejewski](https://twitter.com/Macia10)
 
 -----
 Hints & Help
