@@ -9,6 +9,8 @@ Error handling does not account for ASLR. List of dumped modules needs to be ser
 
 
 *Install Capstone for python (disassembly library)*
+   - Install the core of Capstone: https://github.com/aquynh/capstone/blob/next/COMPILE.TXT
+   - Install Python binding for Capstone: https://github.com/aquynh/capstone/blob/next/bindings/python/README
 
 To use, first start the server:
 ```
