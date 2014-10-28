@@ -214,7 +214,12 @@ function shell(aspace){
 			break;
 			}
 			else if(cmd_s[0] == "resolve"){
+			try{
 			do_resolve(aspace,cmd_s[1], cmd_s[2]);
+			}catch(e){
+			logdbg(e);
+			}
+			
 			continue;
 			}
 			else if (cmd_s[0] == "autodump"){
