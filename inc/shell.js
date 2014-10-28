@@ -91,7 +91,9 @@ function do_resolve(aspace,addr,ModuleName){
 		do_dis_resolve(aspace,instraddr,0x8,modname);
 				
 	}
-	do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
+	//do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
+	//uncomment for dumps
+	//comment for debugging expediency
 }
 
 
