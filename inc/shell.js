@@ -104,11 +104,15 @@ function do_search(aspace, begaddr, endaddr, pattern){
         var score = 0;
         var found = -1;
         var reverse = false;
-
+		if (endaddr == begaddr) {
+		logdbg("ss begaddr must not equal endaddr");
+		return
+		}
         if(endaddr <= begaddr){
             logdbg("Searching in reverse");
             reverse = true;
         }
+		
 		
         for(var i = begaddr; i != endaddr;){
            var cb = aspace[i]; 
