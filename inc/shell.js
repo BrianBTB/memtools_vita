@@ -215,7 +215,9 @@ function shell(aspace){
 			}
 			else if(cmd_s[0] == "resolve"){
 			try{
-			do_resolve(aspace,cmd_s[1], cmd_s[2]);
+			var addr = Number(cmd_s[1]);
+            var name = cmd_s[2];
+			do_resolve(aspace,addr, name);
 			}catch(e){
 			logdbg(e);
 			}
