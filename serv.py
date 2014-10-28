@@ -153,8 +153,8 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 
                 ptrstr = ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
-                
-                print cmdstr = "resolve " + ptrstr + " " + extra
+                cmdstr = "resolve " + ptrstr + " " + extra
+                print cmdstr
                 if int(ptrstr,16) > 0x40000000:
                     self.mods.append(cmdstr)
                 else:
