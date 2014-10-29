@@ -6,13 +6,13 @@
     than fiddling with the Vita.
 """
 
-import SocketServer
+import sys
+import socket,SocketServer
 import SimpleHTTPServer
 import os
 import urlparse
 from capstone import CS_MODE_THUMB, CS_MODE_ARM, Cs, CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN
 
-PORT = 8888
 PATH = os.path.dirname(os.path.realpath(__file__))
 CURRENT_DUMP_FILE_NAME = ""
 
@@ -63,11 +63,44 @@ def disassemble(addr, data, thumb=False):
     if none != 1:
         print "Couldn't disassemble at 0x%x"%(addr)
 
-
+"""
+    Print available commands
+"""
+def print_help(cmd):
+    cmd_s = cmd.split(" ");
+    if len(cmd_s) == 1:
+        print "\tautodump"
+        #print "\tsavemods"
+        print "\tx <addr> <len>"
+        print "\tdis <addr> <len> <mode>"
+        print "\tdump <addr> <len> <fname>"
+        print "\tss <begaddr> <endaddr> <pattern>"
+        print "\thelp <command>"
+        print "\treload"
+        print "\texit"
+        print "to get command help, use help <command>"
+    else:
+        if cmd_s[1] == 'autodump':
+            print "\tautodump : use to begin recursively resolving the modules"
+        elif cmd_s[1] == 'x':
+            print "\tx <addr> <len> : to display <len> bytes from <addr> in a hex-editor-like fashion"
+        elif cmd_s[1] == 'dis':
+            print "\tdis <addr> <len> <mode> : to disassemble <len> bytes from <addr> in <mode> (thumb or arm, latter is default)"
+        elif cmd_s[1] == 'dump':
+            print "\tdump <addr> <len> <fname> : to dump <len> bytes from <addr> to <fname>"
+        elif cmd_s[1] == 'ss':
+            print "\tss <begaddr> <endaddr> <pattern> : to search for the string <pattern> in [begaddr, endaddr["
+        elif cmd_s[1] == 'reload':
+            print "\treload : to reload/reset everything"
+        elif cmd_s[1] == 'exit':
+            print "\texit : to exit"
+        else:
+            print "\thelp <command> : prints help about <command>"
 """
     The good guy
 """
 class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
+
     """
         GET Request Handler
         Used for debugging and interactive shell stuff
@@ -82,6 +115,8 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 parsed = urlparse.parse_qs(urlparse.urlparse(self.path).query)
                 dbg = parsed['dbg'][0]
                 print dbg
+                if dbg == 'Exiting... (Call by user)':
+                    os._exit(0)
             except KeyError:
                 print "[+] Warning: Dbg error"
         # handle dump
@@ -93,8 +128,18 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             if len(self.mods) > 0:
                 cmd = self.mods.pop(0)
             else:
-                cmd = raw_input("%> ")
-            self.wfile.write(cmd)
+                localCmd = True
+                while localCmd == True:
+                    cmd = raw_input("%> ")
+		    if cmd.startswith('help'):
+                        print_help(cmd)
+                    else:
+                        localCmd = False
+            try:
+                self.wfile.write(cmd)
+            except:
+                print '[+] DBG: Exiting... (Socket Error)'
+                os._exit(0)
         # normal requests
         else:
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
@@ -211,6 +256,20 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         except Exception, ex:
             print '[+] DBG Directory Initializer Exception: ' + str(ex)
             return False                
+
+try:
+    PORT = int(sys.argv[1])
+except:
+    PORT = 8888
+
+
+#src : http://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("gmail.com",80))
+localIP = s.getsockname()[0]
+s.close()
+
+print "Starting server on " + localIP + ":" + str(PORT)
 
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)
