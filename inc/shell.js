@@ -137,7 +137,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
         if(found == -1){
             logdbg("Pattern not found!");
         }else{
-            logdbg("Searching for " + pattern + " found at: 0x" + found.toString(16));
+            logdbg("Pattern " + pattern + " found at: 0x" + found.toString(16));
 			return found;
         }
     }catch(e){
@@ -219,6 +219,7 @@ function shell(aspace){
 			try{
 			var addr = Number(cmd_s[1]);
             var name = cmd_s[2];
+			logdbg("Resolving: " + name + ": " + addr);
 			do_resolve(aspace,addr, name);
 			}catch(e){
 			logdbg(e);
@@ -227,7 +228,7 @@ function shell(aspace){
 			continue;
 			}
 			else if (cmd_s[0] == "autodump"){
-				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
+				logdbg("Beginning automatic dump...");
 				do_resolve(aspace,0x82000000, "SceWebKit")
 				continue;
 			}

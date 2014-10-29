@@ -11,6 +11,7 @@ import SimpleHTTPServer
 import os
 import urlparse
 import time
+import json
 from capstone import CS_MODE_THUMB, CS_MODE_ARM, Cs, CS_ARCH_ARM, CS_MODE_LITTLE_ENDIAN
 
 PORT = 8888
@@ -84,7 +85,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 dbg = parsed['dbg'][0]
                 print dbg
             except KeyError:
-                print "[+] Warning: Dbg error"
+                print "[+] Warning: Dbg error: " +json.dumps(parsed)
         # handle dump
         elif self.path == '/Command':   			
             sockfd = self.request
