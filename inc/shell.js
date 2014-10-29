@@ -206,7 +206,7 @@ function shell(aspace){
             var cmd_s = cmd.split(" ");
             // exit
             if(cmd_s[0] == "exit"){
-                logdbg("Exiting...");
+                logdbg("Exiting... (Call by user)");
                 return;
             }
 			else if (cmd_s[0] == "reload"){
@@ -293,7 +293,7 @@ function shell(aspace){
                 return;
             }
             else{
-                logdbg("Unknown command: " + cmd_s[0]);
+                logdbg("Unknown command: " + cmd_s[0] + ", type help for more informations.");
             }
         }
     }catch(e){
