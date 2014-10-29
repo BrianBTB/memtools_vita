@@ -153,6 +153,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 disassed = md.disasm(data.decode('hex'), addr)
                 ops = []
                 ptrstr = ""
+                print "-------------------------------------"
                 print "Parsing: " + extra
                 for i in disassed:
                     print "0x%x:\t%s    %s" %(i.address, i.mnemonic, i.op_str)
@@ -166,11 +167,11 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 ptrstr = "0x"+ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
                 cmdstr = "resolve " + ptrstr + " " + extra
                 print cmdstr
-                if (int(ptrstr,16) > 0x40000000) and (int(ptrstr,16) < 0xE0000000):
+                if (int(ptrstr,16) > 0x40000000): #and (int(ptrstr,16) < 0xE0000000):
                     self.mods.append(cmdstr)
                 else:
                     print "Could not resolve " + extra + " (invalid address) "
-                print "----"
+                print "-------------------------------------"
 
             """
             if(typ == 'dump'):
