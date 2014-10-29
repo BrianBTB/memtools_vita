@@ -7,6 +7,7 @@
 """
 
 import SocketServer
+import socket
 import SimpleHTTPServer
 import os
 import urlparse
@@ -214,4 +215,5 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)
+print("Server start at http://"+[(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]+":8888")
 server.serve_forever()
