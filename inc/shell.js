@@ -79,8 +79,9 @@ function do_dis_resolve(aspace, addr, len, name){
     Resolve module from address
 */
 function do_resolve(aspace,addr,ModuleName){
-	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
-	var this_module = new sce_module(addr-4,aspace);
+	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName) -4;
+	do_read(aspace,addr,0x5C+0x20);
+	var this_module = new sce_module(addr,aspace);
 	//mods.push(this_module);
 	for(i=0;i<this_module.import_list.length;i++)
 	{
@@ -91,7 +92,9 @@ function do_resolve(aspace,addr,ModuleName){
 		do_dis_resolve(aspace,instraddr,0x8,modname);
 				
 	}
-	do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
+	//do_dump(aspace,this_module.baseaddr,this_module.module_info.stub_end,this_module.module_info.modname + ".bin");
+	//uncomment for dumps
+	//comment for debugging expediency
 }
 
 
@@ -135,7 +138,7 @@ function do_search(aspace, begaddr, endaddr, pattern){
         if(found == -1){
             logdbg("Pattern not found!");
         }else{
-            logdbg("Searching for " + pattern + " found at: 0x" + found.toString(16));
+            logdbg("Pattern " + pattern + " found at: 0x" + found.toString(16));
 			return found;
         }
     }catch(e){
@@ -217,6 +220,7 @@ function shell(aspace){
 			try{
 			var addr = Number(cmd_s[1]);
             var name = cmd_s[2];
+			logdbg("Resolving: " + name + ": " + addr);
 			do_resolve(aspace,addr, name);
 			}catch(e){
 			logdbg(e);
@@ -225,7 +229,7 @@ function shell(aspace){
 			continue;
 			}
 			else if (cmd_s[0] == "autodump"){
-				logdbg("Directive one: Protect humanity! Directive two: Dump ram at all costs. Directive three: Dance!");
+				logdbg("Beginning automatic dump...");
 				do_resolve(aspace,0x82000000, "SceWebKit")
 				continue;
 			}
