@@ -16,7 +16,7 @@ from capstone import CS_MODE_THUMB, CS_MODE_ARM, Cs, CS_ARCH_ARM, CS_MODE_LITTLE
 PORT = 8888
 PATH = os.path.dirname(os.path.realpath(__file__))
 CURRENT_DUMP_FILE_NAME = ""
-
+ALREADY_RESOLVED_MODULE_NAMES = []
 def dump_data(data, file_name):
     """
     Dump given data to file
@@ -140,6 +140,12 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     disassemble(addr, data.decode('hex'))
 
             if(typ == 'dis_res'):
+                global ALREADY_RESOLVED_MODULE_NAMES
+                if extra in ALREADY_RESOLVED_MODULE_NAMES:
+                    print "Already Resolved " + extra
+                    return
+                else:
+                    ALREADY_RESOLVED_MODULE_NAMES.append(extra)
                 mode = CS_MODE_ARM
                 md = Cs(CS_ARCH_ARM, mode + CS_MODE_LITTLE_ENDIAN)
                 disassed = md.disasm(data.decode('hex'), addr)
@@ -163,6 +169,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 else:
                     print "Could not resolve " + extra + " (invalid address) "
                 print "----"
+                
             """    
             if(typ == 'dump'):
                 fname = extra
