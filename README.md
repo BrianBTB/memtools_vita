@@ -58,6 +58,7 @@ Github Contributers
 - [MrNetrix](https://github.com/MrNetrix) : implemented reverse search and hex search
 - [Aquynh](https://github.com/aquynh) : Changed install instructions for capstone and linked to project
 - [PureIso](https://github.com/PureIso): fixed directory existence check in dump code, added backup of old dumps and creation of new unique file if dump exists
+- [Spectenoir06](https://github.com/spectrenoir06) : Added output of the server IP on load
 
 -----
 Testers
