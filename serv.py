@@ -7,6 +7,7 @@
 """
 
 import SocketServer
+import socket
 import SimpleHTTPServer
 import os
 import urlparse
@@ -76,7 +77,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
     """
     mods = []
     def do_GET(self):
-        
+
         # debugging info
         if self.path.startswith('/Debug'):
             try:
@@ -87,7 +88,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             except KeyError:
                 print "[+] Warning: Dbg error: " +json.dumps(parsed)
         # handle dump
-        elif self.path == '/Command':   			
+        elif self.path == '/Command':
             sockfd = self.request
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
@@ -159,7 +160,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                         print "Could not resolve " + extra + " (syscall) "
                         return
                     ops.append(i.op_str[7:])
-                    
+
 
 
                 ptrstr = "0x"+ops[1].rjust(4,'0')+ops[0].rjust(4,'0')
@@ -170,8 +171,8 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 else:
                     print "Could not resolve " + extra + " (invalid address) "
                 print "----"
-                
-            """    
+
+            """
             if(typ == 'dump'):
                 fname = extra
                 dump_data(data.decode('hex'), fname)
@@ -189,7 +190,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
                     CURRENT_DUMP_FILE_NAME = extra
 
                 dump_data(data.decode('hex'), CURRENT_DUMP_FILE_NAME)
-            
+
     @staticmethod
     def dump_directory_initializer(file_name):
         """
@@ -204,7 +205,7 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             directory = PATH+"/dump/"
             if not os.path.exists(directory):
                 os.makedirs(directory)
-			
+
             if file_name != "":
                 for root, dirs, files in os.walk(directory):
                     for individual_file in files:
@@ -219,8 +220,9 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             return True
         except Exception, ex:
             print '[+] DBG Directory Initializer Exception: ' + str(ex)
-            return False                
+            return False
 
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)
+print("Server start at http://"+[(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]+":"+str(PORT))
 server.serve_forever()
