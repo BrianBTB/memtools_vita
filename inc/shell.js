@@ -79,8 +79,9 @@ function do_dis_resolve(aspace, addr, len, name){
     Resolve module from address
 */
 function do_resolve(aspace,addr,ModuleName){
-	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName);
-	var this_module = new sce_module(addr-4,aspace);
+	addr = do_search(aspace, addr, 0xFFFFFFFF, ModuleName) -4;
+	do_read(aspace,addr,0x5C+0x20);
+	var this_module = new sce_module(addr,aspace);
 	//mods.push(this_module);
 	for(i=0;i<this_module.import_list.length;i++)
 	{
