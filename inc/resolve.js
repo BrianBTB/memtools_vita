@@ -130,6 +130,7 @@ function module_import_entry(addr,aspace) {
 //    void    **tls_entry_table;  // array of pointers to ???
 //} module_imports_t;
 
+try{
 this.address = addr;
 this.size             = ReadInt16FromAddr(addr,aspace);
 this.lib_version      = ReadInt16FromAddr(addr+2,aspace);
@@ -152,6 +153,9 @@ this.tls_entry_table  = ReadInt32FromAddr(addr+48,aspace);
 this.name = readZeroTruncString(this.lib_name,aspace);
 if (this.size != 0x34){
 logdbg("Warning! off size imports entry: " + this.name + " (" + this.size.toString());
+}
+}catch(e){
+logdbg(e.getMessage());
 }
 }
 module_import_entry.prototype.toString = function() {
