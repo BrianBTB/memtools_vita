@@ -150,7 +150,9 @@ this.tls_entry_table  = ReadInt32FromAddr(addr+48,aspace);
 
 
 this.name = readZeroTruncString(this.lib_name,aspace);
-
+if (this.size != 0x34){
+logdbg("Warning! off size imports entry: " + this.name + " (" + this.size.toString());
+}
 }
 module_import_entry.prototype.toString = function() {
 
