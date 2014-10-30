@@ -133,6 +133,12 @@ function module_import_entry(addr,aspace) {
 try{
 this.address = addr;
 this.size             = ReadInt16FromAddr(addr,aspace);
+this.lib_name         = ReadInt32FromAddr(addr+20,aspace);
+this.name = readZeroTruncString(this.lib_name,aspace);
+if (this.size != 0x34){
+logdbg("Warning! off size imports entry: " + this.name + " (0x" + this.size.toString(16) + ")");
+do_read(aspace, addr, this.size); 
+}
 this.lib_version      = ReadInt16FromAddr(addr+2,aspace);
 this.attribute        = ReadInt16FromAddr(addr+4,aspace);
 this.num_functions    = ReadInt16FromAddr(addr+6,aspace);
@@ -140,7 +146,6 @@ this.num_vars         = ReadInt16FromAddr(addr+8,aspace);
 this.num_tls_vars     = ReadInt16FromAddr(addr+10,aspace);
 this.reserved1        = ReadInt32FromAddr(addr+12,aspace);
 this.module_nid       = ReadInt32FromAddr(addr+16,aspace);
-this.lib_name         = ReadInt32FromAddr(addr+20,aspace);
 this.reserved2        = ReadInt32FromAddr(addr+24,aspace);
 this.func_nid_table   = ReadInt32FromAddr(addr+28,aspace);
 this.func_entry_table = ReadInt32FromAddr(addr+32,aspace);
@@ -150,10 +155,8 @@ this.tls_nid_table    = ReadInt32FromAddr(addr+44,aspace);
 this.tls_entry_table  = ReadInt32FromAddr(addr+48,aspace);
 
 
-this.name = readZeroTruncString(this.lib_name,aspace);
-if (this.size != 0x34){
-logdbg("Warning! off size imports entry: " + this.name + " (" + this.size.toString());
-}
+
+
 }catch(e){
 logdbg(e.getMessage());
 }
