@@ -10,6 +10,8 @@ import SocketServer
 import socket
 import SimpleHTTPServer
 import os
+import sys
+import signal
 import urlparse
 import time
 import json
@@ -98,6 +100,9 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             else:
                 cmd = raw_input("%> ")
             self.wfile.write(cmd)
+            if cmd == "exit":
+                    sys.exit(0)
+            
         # normal requests
         else:
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
@@ -222,7 +227,11 @@ class VitaWebServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         except Exception, ex:
             print '[+] DBG Directory Initializer Exception: ' + str(ex)
             return False
+def cleanexit(signal,frame):
+    print "exiting"
+    sys.exit(0)
 
+signal.signal(signal.SIGINT, cleanexit)
 SocketServer.TCPServer.allow_reuse_address = True
 server = SocketServer.TCPServer(('', PORT), VitaWebServer)
 print("Server start at http://"+[(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]+":"+str(PORT))
