@@ -7,5 +7,5 @@ git checkout debug
 git pull origin debug
 chmod a+x serv.py
 # Starting logfile
-script serv.py.log
+echo "python serv.py && exit" | script serv.py.log
 exit
